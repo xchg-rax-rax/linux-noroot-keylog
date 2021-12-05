@@ -1,0 +1,24 @@
+[ Initalization ]
+display = XOpenDisplay(NULL);
+XQueryExtension(display, "XInputExtension", &xi_opcode, &event, &error) 
+
+[ test ]
+
+find_device_info
+    devices = XListInputDevices(display, &num_devices);
+register_events
+    screen = DefaultScreen(dpy);
+    root_win = RootWindow(dpy, screen);
+    device = XOpenDevice(dpy, info->id);
+    // Keyboard And "Mouse" events, these aren't functions just horrenus marcos that give you a XEventClss structs 
+    // All event types are just defined as INVALID_EVENT_TYPE
+    DeviceKeyPress(device, key_press_type, event_list[number]);
+    DeviceKeyRelease(device, key_release_type, event_list[number]);
+    DeviceButtonPress(device, button_press_type, event_list[number]);
+    DeviceButtonRelease(device, button_release_type, event_list[number]);
+    XSelectExtensionEvent(dpy, root_win, event_list, number)
+print_events
+    XNextEvent(dpy, &Event);
+[ Termination ]
+XSync(display, False);
+XCloseDisplay(display);
